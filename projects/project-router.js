@@ -17,10 +17,17 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     Projects.getProjects()
-    .then(projects => {      
-        res.status(200).json(projects);
+    .then(projects => {  
+        if (projects.completed) {
+            projects.completed = true
+          }else{
+              projects.completed = false
+          }
+          return res.status(200).json(projects)
+        })    
+        // res.status(200).json(projects);
              
-    })
+    
     .catch(error => {
         console.log(error);
         res.status(500).json({message: "There was an error fetching projects"})

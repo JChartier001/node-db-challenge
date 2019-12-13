@@ -17,14 +17,15 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {    
     Tasks.getTasks()
     .then(tasks => {
-        tasks.map(task => {
-            if (task.completed) {
-              task.completed = true
+        tasks.map(tasks => {
+            if (tasks.completed) {
+              tasks.completed = true
             }else{
-                task.completed = false
+                tasks.completed = false
             }
-            return res.status(200).json(task)
+            
           })
+          return res.status(200).json(tasks)
     })
     .catch(error => {
         console.log(error);
