@@ -12,7 +12,7 @@ function getTasks(){
 function addNewTask(body){
     return db('tasks')
     .insert(body, "id")
-    .then(ids => {
+    .then(id => {
         return db('tasks')
         .where({id})
         .first();
