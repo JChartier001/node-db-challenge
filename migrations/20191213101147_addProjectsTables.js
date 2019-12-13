@@ -31,15 +31,13 @@ exports.up = function(knex) {
       .defaultTo(false)
       .notNullable();
       tbl.integer('task_id')
-      .unsigned()
-      .notNullable()
+      .unsigned()      
       .references('id')
       .inTable('tasks')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
       tbl.integer('resource_id')
-      .unsigned()
-      .notNullable()
+      .unsigned()      
       .references('id')
       .inTable('resources')
       .onDelete('CASCADE')
@@ -49,5 +47,8 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
+    return knex.schema.dropTableIfExists('projects')
+    .dropTableIfExists('tasks')
+    .dropTableIfExists('resources')
   
 };
