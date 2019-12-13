@@ -2,14 +2,14 @@ const db = require('../data/dbConfig.js');
 
 module.exports = {
     getTasks,
-    postNewTask
+    addNewTask
 }
 
-getTasks(){
+function getTasks(){
     return db('tasks');
 }
 
-postNewTask(body){
+function addNewTask(body){
     return db('tasks')
     .insert(body, "id")
     .then(ids => {
