@@ -12,6 +12,6 @@ server.use(express.json());
 
 server.use('/api/projects', Projects);
 server.use('/api/tasks', Tasks);
-// server.use('/api/resources', Resources);
+server.use('/api/resources', Resources);
 
 module.exports = server;
