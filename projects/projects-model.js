@@ -17,4 +17,7 @@ function addNewProject(body) {
         .where({id})
         .first();
     })
+    .catch(error => {
+        res.status(400).json({message: "Project could not be added."})
+    })
 }

@@ -17,8 +17,9 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     Projects.getProjects()
-    .then(projects => {
+    .then(projects => {      
         res.status(200).json(projects);
+             
     })
     .catch(error => {
         console.log(error);
