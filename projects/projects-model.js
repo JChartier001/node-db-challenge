@@ -2,17 +2,17 @@ const db = require('../data/dbConfig.js');
 
 module.exports = {
     getProjects,
-    postNewProject
+    addNewProject
 }
 
-getProjects(){
+function getProjects()  {
     return db('projects');
 }
 
-postNewProject(body){
+function addNewProject(body) {
     return db('projects')
     .insert(body, "id")
-    .then(ids => {
+    .then(id => {
         return db('projects')
         .where({id})
         .first();
