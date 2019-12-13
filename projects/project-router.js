@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
     const body = req.body;
     Projects.addNewProject(body)
     .then(project => {
-        res.status(200).json(project);
+        res.status(201).json(project);
     })
     .catch(error => {
         console.log(error);
@@ -26,6 +26,18 @@ router.get('/', (req, res) => {
         res.status(500).json({message: "There was an error fetching projects"})
     })
 });
+
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+    Projects.getTasksByProject(id)
+    .then(tasks =>{
+        res.status(200).json(tasks)
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({message: "There was an error fetching tasks for specified project"})
+    })
+})
 
 module.exports = router;
 

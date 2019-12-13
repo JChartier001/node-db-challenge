@@ -5,10 +5,10 @@ module.exports = {
     addNewTask
 }
 
-function getTasks(){
+function getTasks(){    
     return db('tasks');
+    
 }
-
 function addNewTask(body){
     return db('tasks')
     .insert(body, "id")
