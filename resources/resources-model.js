@@ -1,36 +1,51 @@
 const db = require('../data/dbConfig.js');
 
 module.exports = {
-    getResources,
-    addNewResource,
-    updateResource
+    find,
+    add,
+    update,
+    remove
 }
 
-function getResources(){
+function find(){
     return db('resources');
 }
 
-function addNewResource(body){
+function add(body){
     return db('resources')
     .insert(body, "id")
-    .then(id => {
+    .then(ids => {
         return db('resources')
-        .where({id})
+        .where({id: ids[0]})
         .first();
     })
 }
 
-function updateResource(body, id){
+function update(changes, id){
     return db('resources')
     .where({id})
-    .update(body,[body])
-    .then(id => {
-        console.log(id);
+    .update(changes)
+    .then(() => {
         return db('resources')
         .where({id})
-        .first()
+        .first();
     })
     .catch(error => {
-        console.log(error)
+        console.log(error);
     })
+}
+
+
+function remove(id){
+    return db('resources')
+        .where({id})
+        .del()
+        .then(() => {
+            return db('resources')
+            .where({id})
+            .first()
+        })
+        .catch(error => {
+            console.log(error)
+        })  
 }

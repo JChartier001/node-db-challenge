@@ -1,20 +1,51 @@
 const db = require('../data/dbConfig.js');
 
 module.exports = {
-    getTasks,
-    addNewTask
+    find,
+    add,
+    update,
+    remove
 }
 
-function getTasks(){    
+function find(){    
     return db('tasks');
     
 }
-function addNewTask(body){
+function add(body){
     return db('tasks')
     .insert(body, "id")
-    .then(id => {
+    .then(ids => {
+        return db('tasks')
+        .where({id: ids[0]})
+        .first();
+    })
+}
+
+function update(changes, id){
+    return db('tasks')
+    .where({id})
+    .update(changes)
+    .then(() => {
         return db('tasks')
         .where({id})
         .first();
     })
+    .catch(error => {
+        console.log(error);
+    })
+}
+
+
+function remove(id){
+    return db('tasks')
+        .where({id})
+        .del()
+        .then(() => {
+            return db('tasks')
+            .where({id})
+            .first()
+        })
+        .catch(error => {
+            console.log(error)
+        })  
 }
