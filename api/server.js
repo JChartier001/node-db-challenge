@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 
 const Projects = require('../projects/project-router.js');
@@ -9,6 +10,7 @@ const server = express();
 
 
 server.use(express.json());
+server.use(cors());
 
 server.use('/api/projects', Projects);
 server.use('/api/tasks', Tasks);
