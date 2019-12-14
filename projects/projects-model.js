@@ -1,25 +1,27 @@
 const db = require('../data/dbConfig.js');
 
 module.exports = {
-    getProjects,
-    addNewProject,
-    getTasksByProject
+    find,
+    add,
+    getTasksByProject,
+    update,
+    remove
 }
 
-function getProjects()  {
+function find()  {
     return db('projects');
 }
 
-function addNewProject(body) {
+function add(body) {
     return db('projects')
     .insert(body, "id")
-    .then(id => {
+    .then(ids => {
         return db('projects')
-        .where({id})
+        .where({id: ids[0]})
         .first();
     })
     .catch(error => {
-        res.status(400).json({message: "Project could not be added."})
+        console.log(error);
     })
 }
 
@@ -28,4 +30,35 @@ function getTasksByProject(id) {
     .select("p.name as projectName", "p.description as projectDesc", "t.id as taskID", "t.description as taskDesc", "t.notes as taskNote", "t.completed as taskCompleted" )
     .join("projects as p", "p.id", "t.project_id")
     .where("p.id", id);
+}
+
+function update(changes, id) {
+    return db('projects')
+    .where({id})
+    .update(changes)
+    .then(() => {
+        return db('projects')
+        .where({id})
+        .first()
+    })
+    .catch(error => {
+        console.log(error)
+    })    
+    }
+
+function remove(id){
+    return db('projects')
+        .where({id})
+        .del()
+        .then(() => {
+            return db('projects')
+            .where({id})
+            .first()
+        })
+        .catch(error => {
+            console.log(error)
+        })    
+        
+
+    
 }
